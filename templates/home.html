@@ -3,9 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LazyCoder</title>
+
+    {% if title %}
+       <title>LazyCoder - {{ title }}</title> 
+    {% else %}
+        <title>LazyCoder</title>
+    {% endif %}
 </head>
 <body>
-    <h1>Home Page</h1>
+    {% for post in posts %}
+        <h1>{{ post.title }}</h1>
+        <p>Posted by {{ post.author }} on {{ post.posted_date }}</p>
+        <p>{{ post.content }}</p>
+    {% endfor %}
 </body>
 </html>
