@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
+from forms import RegisterationForm
+
 
 app = Flask(__name__)
 
@@ -13,7 +15,7 @@ posts = [
         'title': 'Second Post',
         'author': 'Rahim',
         'posted_date': 'September 23, 2020',
-        'content': 'This is content for second post.'
+        'content': 'This is some test text content for second post. The purpose is to see these sentences as test in view.'
     },
 
 ]
@@ -26,6 +28,11 @@ def home():
 @app.route('/about')
 def about():
     return render_template('about.html', title="About")
+
+@app.route('/signup')
+def signup():
+    form = RegisterationForm()
+    return render_template('signup.html', title="Sign Up", form=form)
 
 if __name__ == '__main__':
     app.run(debug=True)
