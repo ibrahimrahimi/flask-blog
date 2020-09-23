@@ -42,8 +42,11 @@ def signup():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        flash(f"You have successfully logged with {form.email.data} email!", 'success')
-        return redirect(url_for('home'))
+        if form.email.data == 'irahimi@netlinks.af' and form.password.data == 'testpass':
+            flash(f"You have successfully logged with {form.email.data} email!", 'success')
+            return redirect(url_for('home'))
+        else:
+            flash(f"Login Faild. Please provide correct username and password!", 'danger')
     return render_template('login.html', title="Login", form=form)
 
 if __name__ == '__main__':
