@@ -58,24 +58,18 @@
         <div class="row">
             <!-- Post Content Column-->
             <div class="col-lg-8 mt-2" style="margin-bottom: 130px;">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
                 {% block content %} {% endblock content %}
             </div>
-
-            <!-- Sidebar Widgets Column-->
-            <div class="col-md-4">
-                <!-- Search Widget -->
-                <div class="card my-2">
-                    <h5 class="card-header">Search</h5>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for...">
-                            <span class="input-group-append">
-                            <button class="btn btn-secondary" type="button">Go!</button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <!-- /.row -->
 
