@@ -49,5 +49,13 @@ def login():
             flash(f"Login Faild. Please provide correct username and password!", 'danger')
     return render_template('login.html', title="Login", form=form)
 
+@app.route('/contact')
+def contact():
+   return render_template('contact.html', title='Contact')
+
+@app.route('/service')
+def service():
+   return render_template('service.html', title='Services')
+
 if __name__ == '__main__':
     app.run(debug=True)
