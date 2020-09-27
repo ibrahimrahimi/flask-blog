@@ -1,9 +1,7 @@
-from flask import Flask, render_template, url_for, flash, redirect
-from forms import RegisterationForm, LoginForm
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = '37796a65dd2d6d4957d197aba95dedc1'
+from flask import render_template, url_for, flash, redirect
+from blog import app
+from blog.forms import RegisterationForm, LoginForm
+from blog.models import User, Post
 
 posts = [
     {
@@ -56,6 +54,3 @@ def contact():
 @app.route('/service')
 def service():
    return render_template('service.html', title='Services')
-
-if __name__ == '__main__':
-    app.run(debug=True)
