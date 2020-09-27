@@ -1,8 +1,9 @@
+import os
+from flask_login import login_user
 from flask import render_template, url_for, flash, redirect
 from blog import app, db, bcrypt
 from blog.models import User, Post
 from blog.forms import RegisterationForm, LoginForm
-import os
 
 posts = [
     {
@@ -36,8 +37,6 @@ def about():
 def signup():
     form = RegisterationForm()
     if form.validate_on_submit():
-        basedir = os.path.abspath(os.path.dirname(__file__))
-        print('basedir::::::', basedir)
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
@@ -50,7 +49,9 @@ def signup():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'irahimi@netlinks.af' and form.password.data == 'testpass':
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
             flash(f"You have successfully logged with {form.email.data} email!", 'success')
             return redirect(url_for('home'))
         else:
