@@ -1,7 +1,8 @@
 from flask import render_template, url_for, flash, redirect
-from blog import app
-from blog.forms import RegisterationForm, LoginForm
+from blog import app, db, bcrypt
 from blog.models import User, Post
+from blog.forms import RegisterationForm, LoginForm
+import os
 
 posts = [
     {
@@ -19,6 +20,9 @@ posts = [
 
 ]
 
+db.create_all()
+db.session.commit()
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -32,8 +36,14 @@ def about():
 def signup():
     form = RegisterationForm()
     if form.validate_on_submit():
-        flash(f'Account successfully created for {form.username.data}!', 'success')
-        return redirect(url_for('home'))
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        print('basedir::::::', basedir)
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        flash(f'Your Account Successfully Created, Now You Can Login!', 'success')
+        return redirect(url_for('login'))
     return render_template('signup.html', title="Sign Up", form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
