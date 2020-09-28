@@ -5,7 +5,7 @@ from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
 from blog import app, db, bcrypt
 from blog.models import User, Post
-from blog.forms import RegisterationForm, LoginForm, UpdateAccountForm
+from blog.forms import RegisterationForm, LoginForm, UpdateAccountForm, PostForm
 
 posts = [
     {
@@ -109,7 +109,8 @@ def contact():
 def service():
    return render_template('service.html', title='Services')
 
-@app.route('/post/new')
+@app.route('/post/new', methods=['GET', 'POST'])
 @login_required
 def create_post():
-   return render_template('create_post.html', title='New Post')
+    form = PostForm()
+    return render_template('create_post.html', title='New Post', form=form)
