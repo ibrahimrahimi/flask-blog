@@ -1,4 +1,5 @@
 import os
+import secrets
 from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
 from blog import app, db, bcrypt
@@ -68,11 +69,24 @@ def logout():
    logout_user()
    return redirect(url_for('login'))
 
+def save_image(form_image):
+    random_hex = secrets.token_hex(8)
+    _, iext = os.path.splitext(form_image.filename)
+    image_fn = random_hex + iext
+    image_path = os.path.join(app.root_path, 'static/profiles', image_fn)
+    
+    form_image.save(image_path)
+    return image_fn
+
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
+        if form.profile.data:
+            profile_image = save_image(form.profile.data)
+            current_user.image_file = profile_image
+            
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
