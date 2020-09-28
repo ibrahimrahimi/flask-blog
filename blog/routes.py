@@ -3,7 +3,7 @@ from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
 from blog import app, db, bcrypt
 from blog.models import User, Post
-from blog.forms import RegisterationForm, LoginForm
+from blog.forms import RegisterationForm, LoginForm, UpdateAccountForm
 
 posts = [
     {
@@ -68,11 +68,21 @@ def logout():
    logout_user()
    return redirect(url_for('login'))
 
-@app.route('/account')
+@app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
+    form = UpdateAccountForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('Your account has been updated successfully!', 'success')
+        return redirect(url_for('account'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
     profile_image = url_for('static', filename='profiles/' + current_user.image_file)
-    return render_template('account.html', title="Account", profile_image=profile_image)
+    return render_template('account.html', title="Account", profile_image=profile_image, form=form)
 
 @app.route('/contact')
 def contact():

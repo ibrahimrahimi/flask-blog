@@ -8,6 +8,43 @@
                 <p class="text-secondary">{{ current_user.email }}</p>
             </div>
         </div>
+        <!--Form Section-->
+        <form method="POST" action="">
+			{{ form.hidden_tag() }}
+			<legend class="border-bottom mb-4">Account Info</legend>
+			<fieldset>
+				<div class="form-group">
+					{{ form.username.label(class="form-control-label") }}
+					{% if form.username.errors %}
+						{{ form.username(class="form-control form-controll-lg is-invalid")}}
+						<div class="invalid-feedback">
+							{% for error in form.username.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.username(class="form-control") }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.email.label(class="form-control-label") }}
+					{% if form.email.errors %}
+						{{ form.email(class="form-control form-controll-lg is-invalid")}}
+						<div class="invalid-feedback">
+							{% for error in form.email.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.email(class="form-control") }}
+					{% endif %}
+				</div>
+			</fieldset>
+			<div class="form-group">
+				{{ form.submit(class="btn btn-outline-info") }}
+				{{ form.cancel(class="btn btn-outline-warning")}}
+			</div>
+		</form>
     </div>
 {% endblock content %}
 
