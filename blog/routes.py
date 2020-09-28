@@ -108,3 +108,8 @@ def contact():
 @app.route('/service')
 def service():
    return render_template('service.html', title='Services')
+
+@app.route('/post/new')
+@login_required
+def create_post():
+   return render_template('create_post.html', title='New Post')
