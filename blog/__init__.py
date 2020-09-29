@@ -10,7 +10,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
-#Database
+#Database Configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.sqlite"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '37796a65dd2d6d4957d197aba95dedc1'

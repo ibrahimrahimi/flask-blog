@@ -3,25 +3,11 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
+from datetime import datetime
 from blog import app, db, bcrypt
 from blog.models import User, Post
 from blog.forms import RegisterationForm, LoginForm, UpdateAccountForm, PostForm
 
-posts = [
-    {
-        'title': 'First Post',
-        'author': 'Ahmad',
-        'posted_date': 'September 22, 2020',
-        'content': 'This is content for first post.'
-    },
-    {
-        'title': 'Second Post',
-        'author': 'Rahim',
-        'posted_date': 'September 23, 2020',
-        'content': 'This is some test text content for second post. The purpose is to see these sentences as test in view.'
-    },
-
-]
 
 db.create_all()
 db.session.commit()
@@ -29,6 +15,7 @@ db.session.commit()
 @app.route('/')
 @app.route('/home')
 def home():
+    posts = Post.query.all()
     return render_template('home.html', posts=posts)
 
 @app.route('/about')
@@ -113,4 +100,10 @@ def service():
 @login_required
 def create_post():
     form = PostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, date_posted=datetime.now(), content=form.content.data, user_id=current_user.id)
+        db.session.add(post)
+        db.session.commit()
+        flash('Post has been created successfully!', 'success')
+        return redirect(url_for('home'))
     return render_template('create_post.html', title='New Post', form=form)
