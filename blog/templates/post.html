@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="content-section mt-3">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='profiles/' + post.author.image_file) }}" alt="">
+        <div class="media-body">
+            <!-- Title -->
+            <h1 class="artile-title">
+                {{ post.title }}
+            </h1>
+            
+            <!-- Author -->
+            <p class="lead">
+                by <a href="#">{{ post.author.username }}</a>
+            </p>
+            <hr>
+            <!-- Date/Time -->
+            <p class="text-muted">Posted on {{ post.date_posted.strftime('%Y-%m-%d') }} at {{ post.date_posted.strftime('%H:%M:%S') }}</p>
+            <hr>
+            <!-- Preview Image -->
+            <img class="img-fluid rounded" src="http://placehold.it/620x150" alt="">
+            <hr>
+            <!-- Post Content -->
+            <p class="lead">{{ post.content }}</p>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block sidebar %}
+    <!-- Side Widget -->
+    <div class="card my-4">
+        <h5 class="card-header">Side Widget</h5>
+        <div class="card-body">
+          You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+        </div>
+    </div>
+{% endblock sidebar %}
