@@ -33,11 +33,16 @@
                 </div>
                 <div class="form-group">
                     {{ form.submit(class="btn btn-outline-info") }}
-                    {{ form.cancel(class="btn btn-outline-warning") }}
+                    <button onclick="goBack()" class="btn btn-outline-warning">Cancel</button>
                 </div>
             </fieldset>
         </form>
     </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 {% endblock content %}
 {% block sidebar %}
     <!-- Search Widget -->
