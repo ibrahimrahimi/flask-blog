@@ -1,12 +1,13 @@
 import os
+import pdb
 import secrets
 from PIL import Image
+from datetime import datetime
 from flask import render_template, url_for, flash, redirect, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
-from datetime import datetime
 from blog import app, db, bcrypt
 from blog.models import User, Post
-from blog.forms import RegisterationForm, LoginForm, UpdateAccountForm, PostForm
+from blog.forms import RegisterationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm
 
 
 db.create_all()
@@ -150,3 +151,10 @@ def user_posts(username):
         .order_by(Post.date_posted.desc())\
         .paginate(page=page, per_page=3)
     return render_template('user_posts.html', title='User Posts', posts=posts, user=user)
+
+@app.route('/reset_password', methods=['GET', 'POST'])
+def request_password():
+    if current_user.is_authenticated:
+       return redirect('home.html')
+    form = RequestResetForm()
+    return render_template('reset_request.html', title="Request Title", form=form)
