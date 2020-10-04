@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
 
     def generate_reset_token(self, expire_secs=1800):
         s = Serializer(app.config['SECRET_KEY'], expire_secs)
-        return s.dumps({'user_id', self.id}).deccode('utf-8')
+        return s.dumps({'user_id': self.id}).decode('utf-8')
 
     @staticmethod
     def check_reset_token(token):
