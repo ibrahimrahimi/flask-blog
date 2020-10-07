@@ -26,5 +26,11 @@ mail = Mail(app)
 
 db = SQLAlchemy(app)
 
-from blog import routes
 
+from blog.user.routes import user
+from blog.post.routes import post
+from blog.main.routes import main
+
+app.register_blueprint(user)
+app.register_blueprint(post)
+app.register_blueprint(main)

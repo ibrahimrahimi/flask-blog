@@ -41,13 +41,13 @@
                 {{ form.cancel(class="btn btn-outline-warning") }}
             </div>
             <small class="text-muted">
-                <a href="{{ url_for('reset_request') }}">Forgot Password?</a>
+                <a href="{{ url_for('user.reset_request') }}">Forgot Password?</a>
             </small>
         </form>
     </div>
     <div class="border-top pt-3">
 		<small class="text-muted">
-			Not Registed Yet! <a class="ml-2" href="{{ url_for('signup') }}">Sign Up</a>
+			Not Registed Yet! <a class="ml-2" href="{{ url_for('user.signup') }}">Sign Up</a>
 		</small>
 	</div>
 {% endblock content %}
