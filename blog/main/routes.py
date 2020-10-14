@@ -4,9 +4,6 @@ from blog.models import Post
 
 main = Blueprint('main', __name__)
 
-db.create_all()
-db.session.commit()
-
 @main.route('/')
 @main.route('/home')
 def home():

@@ -7,7 +7,6 @@ from blog.user.forms import RegisterationForm, LoginForm, UpdateAccountForm, Res
 
 user = Blueprint('user', __name__)
 
-
 @user.route('/signup', methods=['GET', 'POST'])
 def signup():
     if current_user.is_authenticated:
