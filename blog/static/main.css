@@ -85,3 +85,10 @@ footer {
   bottom: 0;
   width: 100%;
 }
+
+.body {
+  background: #dedede;
+}
+.page-wrap {
+  min-height: 65vh;
+}
