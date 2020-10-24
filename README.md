@@ -12,7 +12,7 @@ the project provided in ```requirements.txt``` file by using following command.
 pip3 install -r requirements.txt
 ```
 
-## Usage 'Linux'
+## Usage Linux
 
 In this application we directly used some of the configuration from **OS** environment in config file. So you need to provide 
 some values in ```.bashrc``` file of your **Ubuntu** to make them available for config.py file of the project. You need to add 
@@ -32,7 +32,7 @@ export FLASK_APP=run.py
 
 flask run
 ```
-## Usage 'Windows'
+## Usage Windows
 
 In this application we directly used some of the configuration from **OS** environment in ```config.py``` file of the project. 
 So you need to provide those values in **environment variables** section of your **Windows** to make them available for config.py 
